@@ -145,12 +145,12 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 	
 	function setMyKeyListeners() {
 	
-		function startDraw(e) { event.preventDefault(); startMouseX = e.pageX; startMouseY = e.pageY; };
+		function startDraw(e) { startMouseX = e.pageX; startMouseY = e.pageY; };
 		
 		function endDraw(e) { 
 			event.preventDefault();
-			endMouseX = e.pageX; 
-			endMouseY = e.pageY; 
+			endMouseX = e.changedTouches[0].pageX; 
+			endMouseY = e.changedTouches[0].pageY; 
 			
 			var diffX = endMouseX - startMouseX;
 			var diffY = endMouseY - startMouseY;
@@ -162,14 +162,14 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 			
 			if(magX > magY)	//Horizontal movement
 			{
-				alert("horiz");
+				//alert("horiz");
 				if(diffX > 0)
 					moveRight();
 				else if(diffX < 0)
 					moveLeft();
 			}
 			else {
-				alert("vert");
+				//alert("vert");
 				if(diffY < 0)
 					moveUp();
 				else
@@ -245,8 +245,8 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 		};
 	
 		//Touch
-		box.addEventListener("touchstart",startDraw, true);
-		box.addEventListener("touchend",endDraw, true);
+		box.addEventListener("touchstart",startDraw, false);
+		box.addEventListener("touchend",endDraw, false);
 	
 		//Mouse
 		box.onmousedown = function(e) { startMouseX = e.clientX; startMouseY = e.clientY; };
