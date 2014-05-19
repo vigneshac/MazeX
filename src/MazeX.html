@@ -145,10 +145,10 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 	
 	function setMyKeyListeners() {
 	
-		function startDraw(e) { startMouseX = e.pageX; startMouseY = e.pageY; };
+		function startDraw(e) { e.preventDefault(); startMouseX = e.pageX; startMouseY = e.pageY; };
 		
 		function endDraw(e) { 
-			event.preventDefault();
+			e.preventDefault();
 			endMouseX = e.changedTouches[0].pageX; 
 			endMouseY = e.changedTouches[0].pageY; 
 			
@@ -158,7 +158,7 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 			var magX = diffX * diffX;
 			var magY = diffY * diffY;
 			
-			//alert("hello"+diffX+" "+diffY);
+			alert("hello"+diffX+" "+diffY);
 			
 			if(magX > magY)	//Horizontal movement
 			{
@@ -245,190 +245,8 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 		};
 	
 		//Touch
-		box.addEventListener("touchstart",startDraw, false);
+		box.addEventListener("touchstart",startDraw, true);
 		box.addEventListener("touchend",endDraw, false);
-	
-		//Mouse
-		box.onmousedown = function(e) { startMouseX = e.clientX; startMouseY = e.clientY; };
-        box.onmouseup = function(e) { 
-			endMouseX = e.clientX; 
-			endMouseY = e.clientY; 
-			
-			var diffX = endMouseX - startMouseX;
-			var diffY = endMouseY - startMouseY;
-			
-			var magX = diffX * diffX;
-			var magY = diffY * diffY;
-			
-			//alert("hello"+diffX+" "+diffY);
-			
-			if(magX > magY)	//Horizontal movement
-			{
-				alert("horiz");
-				if(diffX > 0)
-					moveRight();
-				else if(diffX < 0)
-					moveLeft();
-			}
-			else {
-				alert("vert");
-				if(diffY < 0)
-					moveUp();
-				else
-					moveDown();
-			}
-			
-			if(maze[curx][cury]==4) {
-				mytimer = clearInterval(mytimer);
-				//alert("Level Complete!! Your score is "+document.getElementById("coins").innerHTML);
-				document.getElementById('UpdateLabel').innerHTML = "Level Complete!! Your score is "+document.getElementById("coins").innerHTML;
-				curx = 0;
-				cury = maze.length - 1;
-				gotoNextLevel();
-			}
-			else if(maze[curx][cury]==2) {
-				var lives = parseInt(document.getElementById("lives").innerHTML);
-				if(lives>0) {
-					lives--;
-					bgm.pause();
-					inter.src = "audio/mariodie.wav";
-					inter.loop = false;
-					inter.play();
-					document.getElementById("lives").innerHTML = lives+"";
-					//alert("You have "+lives+" lives left.");
-					document.getElementById('UpdateLabel').innerHTML = "You have "+lives+" lives left.";
-					setTimeout(createMaze,1500);
-				}
-				else {
-					mytimer = clearInterval(mytimer);
-					bgm.pause();
-					inter.src = "audio/game-over.mp3";
-					inter.loop = false;
-					inter.play();
-					c.width = c.width;
-					document.getElementById('UpdateLabel').innerHTML = "Game over!! Your score: "+document.getElementById("coins").innerHTML;
-					//alert("Game over!! Your score: "+document.getElementById("coins").innerHTML);
-				}
-			}
-			else if(maze[curx][cury]==5) {
-				maze[curx][cury] = 0; //Setting it back to grass
-				var gold = parseInt(document.getElementById("coins").innerHTML);
-				gold++;
-				ctx.clearRect(32*cury, 32*curx, 32, 32);
-				ctx.drawImage(grass, 32*cury, 32*curx);
-				ctx.drawImage(player, 32*cury, 32*curx);
-				inter.src = "audio/coin.wav";
-				inter.loop = false;
-				inter.play();
-				document.getElementById("coins").innerHTML = gold;
-			}
-			else if(maze[curx][cury]==6) {
-				maze[curx][cury] = 0; //Setting it back to grass
-				var lives = parseInt(document.getElementById("lives").innerHTML);
-				lives++;
-				ctx.clearRect(32*cury, 32*curx, 32, 32);
-				ctx.drawImage(grass, 32*cury, 32*curx);
-				ctx.drawImage(player, 32*cury, 32*curx);
-				inter.src = "audio/oneup.mp3";
-				inter.loop = false;
-				inter.play();
-				document.getElementById("lives").innerHTML = lives;
-			}
-			//Hidden gold
-			else if(maze[curx][cury]==7 || maze[curx][cury]==8) {
-				maze[curx][cury] = 0; //Setting it back to grass
-				var gold = parseInt(document.getElementById("coins").innerHTML);
-				gold+=10;
-				inter.src = "audio/coin.wav";
-				inter.loop = false;
-				inter.play();
-				document.getElementById("coins").innerHTML = gold;
-			}
-	  };
-        
-	
-	
-	  //Setting key-listeners
-	  document.onkeydown = function(e) {
-		e = e || window.event;
-		var charCode = (e.which) ? e.which : e.keyCode;
-		switch(charCode) {
-			case 37: moveLeft();
-					 break;
-			case 38: moveUp();
-					 break;
-			case 39: moveRight();
-					 break;
-			case 40: moveDown();
-					 break;
-		}
-		if(maze[curx][cury]==4) {
-			mytimer = clearInterval(mytimer);
-			//alert("Level Complete!! Your score is "+document.getElementById("coins").innerHTML);
-			document.getElementById('UpdateLabel').innerHTML = "Level Complete!! Your score is "+document.getElementById("coins").innerHTML;
-			curx = 0;
-			cury = maze.length - 1;
-			gotoNextLevel();
-		}
-		else if(maze[curx][cury]==2) {
-			var lives = parseInt(document.getElementById("lives").innerHTML);
-			if(lives>0) {
-				lives--;
-				bgm.pause();
-				inter.src = "audio/mariodie.wav";
-				inter.loop = false;
-				inter.play();
-				document.getElementById("lives").innerHTML = lives+"";
-				//alert("You have "+lives+" lives left.");
-				document.getElementById('UpdateLabel').innerHTML = "You have "+lives+" lives left.";
-				setTimeout(createMaze,1500);
-			}
-			else {
-				mytimer = clearInterval(mytimer);
-				bgm.pause();
-				inter.src = "audio/game-over.mp3";
-				inter.loop = false;
-				inter.play();
-				c.width = c.width;
-				document.getElementById('UpdateLabel').innerHTML = "Game over!! Your score: "+document.getElementById("coins").innerHTML;
-				//alert("Game over!! Your score: "+document.getElementById("coins").innerHTML);
-			}
-		}
-		else if(maze[curx][cury]==5) {
-			maze[curx][cury] = 0; //Setting it back to grass
-			var gold = parseInt(document.getElementById("coins").innerHTML);
-			gold++;
-			ctx.clearRect(32*cury, 32*curx, 32, 32);
-			ctx.drawImage(grass, 32*cury, 32*curx);
-			ctx.drawImage(player, 32*cury, 32*curx);
-			inter.src = "audio/coin.wav";
-			inter.loop = false;
-			inter.play();
-			document.getElementById("coins").innerHTML = gold;
-		}
-		else if(maze[curx][cury]==6) {
-			maze[curx][cury] = 0; //Setting it back to grass
-			var lives = parseInt(document.getElementById("lives").innerHTML);
-			lives++;
-			ctx.clearRect(32*cury, 32*curx, 32, 32);
-			ctx.drawImage(grass, 32*cury, 32*curx);
-			ctx.drawImage(player, 32*cury, 32*curx);
-			inter.src = "audio/oneup.mp3";
-			inter.loop = false;
-			inter.play();
-			document.getElementById("lives").innerHTML = lives;
-		}
-		//Hidden gold
-		else if(maze[curx][cury]==7 || maze[curx][cury]==8) {
-			maze[curx][cury] = 0; //Setting it back to grass
-			var gold = parseInt(document.getElementById("coins").innerHTML);
-			gold+=10;
-			inter.src = "audio/coin.wav";
-			inter.loop = false;
-			inter.play();
-			document.getElementById("coins").innerHTML = gold;
-		}
-	  };	
 	}
 	
 	function gotoNextLevel() {
