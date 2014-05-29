@@ -145,7 +145,11 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 	
 	function setMyKeyListeners() {
 	
-		function startDraw(e) { e.preventDefault(); startMouseX = e.pageX; startMouseY = e.pageY; };
+		function startDraw(e) { 
+			//alert("Start of touch");
+			e.preventDefault(); 
+			startMouseX = e.touches[0].pageX; startMouseY = e.touches[0].pageY; 
+		};
 		
 		function endDraw(e) { 
 			e.preventDefault();
