@@ -23,10 +23,12 @@
 <a href="#" id="startbutton" onclick="startGame()">Start Game</a>
 <br/><br/>
 
- <canvas id="myCanvas" width="256" height="256" style="border: 1px solid #d3d3d3;">
+<div id="gamediv">
+ 	<canvas id="myCanvas" width="256" height="256" style="border: 1px solid #d3d3d3;">
+		Your browser does not support the HTML5 canvas tag.
+	</canvas>
+ </div>
  
-Your browser does not support the HTML5 canvas tag.</canvas>
-
  <p>
 	Time elapsed: <label id="min">0</label>:<label id="sec">00</label>
 	<br/><br/> Coins: <label id="coins">0</label> &nbsp;&nbsp;&nbsp; Live(s): <label id="lives">2</label>
@@ -162,7 +164,7 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 			var magX = diffX * diffX;
 			var magY = diffY * diffY;
 			
-			alert("hello"+diffX+" "+diffY);
+			//alert("hello"+diffX+" "+diffY);
 			
 			if(magX > magY)	//Horizontal movement
 			{
@@ -251,6 +253,7 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 		//Touch
 		box.addEventListener("touchstart",startDraw, true);
 		box.addEventListener("touchend",endDraw, false);
+		box.addEventListener("touchmove", function(e){e.preventDefault();}, false);
 	}
 	
 	function gotoNextLevel() {
@@ -392,7 +395,7 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 		//Setting width and height of canvas based on the maze size
 		document.getElementById("myCanvas").width = 32 * maze.length;
 		document.getElementById("myCanvas").height = 32 * maze.length;
-
+		document.getElementById("myCanvas").style.marginTop = (12-maze.length) * 16;
 	}
 	
     function setTime()
