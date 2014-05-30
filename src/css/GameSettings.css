@@ -17,6 +17,16 @@ h1, h3 {
 	color: black;
 }
 
+#gamediv {
+	width: 384px;
+	height: 384px;
+	margin: 0px auto;
+}
+
+canvas {
+	margin-top: 64px;
+}
+
 a:link, a:visited {
     background-color: #003300;
 	padding: 10px;
