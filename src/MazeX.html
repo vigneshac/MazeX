@@ -355,7 +355,6 @@
 		generateMaze();
 		generateRandomCoins();
 		generateRandomHeart();
-		setMyKeyListeners();
 		createMaze();
 		time_elapsed = 0;
 		bgm.play();
@@ -405,6 +404,10 @@
 		sec = time_elapsed%60;
 		document.getElementById('sec').innerHTML = (sec>9)?(sec+''):('0'+sec);
     }
+	
+	//Setting the Key listeners
+	setMyKeyListeners();
+
 
 </script>
 
