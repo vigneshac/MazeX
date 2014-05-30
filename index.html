@@ -12,26 +12,26 @@
 			<br/><br/>
 			<img src="src/img/loader.gif" alt="Loading" width="32" height="32" align="absmiddle"/>
 			<label id="status" style="font-size: 15">Initializing..</label>
-		</center>
-		
-		<script>
-			var value=0;
-			var myTimer = setInterval(setTime,100);
-			function setTime() {
-				value++;
-				document.getElementById("pro").value = value;
-				if(value<20) {}
-				else if(value<50) {
-					document.getElementById("status").innerHTML = "Loading modules..";
-				}
-				else if(value<100) {
-					document.getElementById("status").innerHTML = "Initializing graphics environment..";
-				}
-				else if(value==100) {
-					clearInterval(myTimer);
-					window.location.href = "src/Rules.html";
-				}
+	</center>
+	
+	<script>
+		var value=0;
+		var myTimer = setInterval(setTime,100);
+		function setTime() {
+			value++;
+			document.getElementById("pro").value = value;
+			if(value<20) {}
+			else if(value<50) {
+				document.getElementById("status").innerHTML = "Loading modules..";
 			}
-		</script>
+			else if(value<100) {
+				document.getElementById("status").innerHTML = "Initializing graphics environment..";
+			}
+			else if(value==100) {
+				clearInterval(myTimer);
+				window.location.href = "src/Rules.html";
+			}
+		}
+	</script>
     </body>
 </html>
